@@ -1,15 +1,13 @@
 import hashlib
 import logging
+import os
 import sys
 
 import flask
-from flask import request, url_for
+from flask import request, current_app
 from flask.ext.cors import CORS
 
 import redis
-
-KEY_EXPIRATION_TIME = 30
-MAX_CONTENT_LENGTH = 32 * 1024
 
 
 def setup_logging():
@@ -27,7 +25,10 @@ logger = setup_logging()
 
 def create_app():
     app = flask.Flask(__name__)
-    app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
+    app.config['MAX_CONTENT_LENGTH'] = \
+        int(os.environ.get('MAX_CONTENT_LENGTH', 32 * 1024))
+    app.config['WEBSTORAGE_KEY_EXPIRATION_TIME'] = \
+        int(os.environ.get('WEBSTORAGE_KEY_EXPIRATION_TIME', 600))
     CORS(app)
     return app
 
@@ -35,7 +36,8 @@ app = create_app()
 
 
 def get_redis():
-    return redis.StrictRedis(host='localhost', port=6379, db=0)
+    url = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
+    return redis.StrictRedis.from_url(url)
 
 
 @app.route('/', methods=['POST'])
@@ -45,7 +47,7 @@ def post_data():
     logger.info("Storing data at %s (%s bytes)", sha1, len(data))
     r = get_redis()
     r.set(sha1, data)
-    r.expire(sha1, KEY_EXPIRATION_TIME)
+    r.expire(sha1, current_app.config['WEBSTORAGE_KEY_EXPIRATION_TIME'])
 
     # TODO: set location header? url_for('get_data', sha1=sha1, _external=True)
     return sha1, 201
