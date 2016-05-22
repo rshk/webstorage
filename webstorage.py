@@ -3,8 +3,7 @@ import logging
 import os
 import sys
 
-import flask
-from flask import request, current_app
+from flask import request, current_app, url_for, Flask
 from flask.ext.cors import CORS
 
 import redis
@@ -24,7 +23,7 @@ logger = setup_logging()
 
 
 def create_app():
-    app = flask.Flask(__name__)
+    app = Flask(__name__)
     app.config['MAX_CONTENT_LENGTH'] = \
         int(os.environ.get('MAX_CONTENT_LENGTH', 32 * 1024))
     app.config['WEBSTORAGE_KEY_EXPIRATION_TIME'] = \
@@ -49,8 +48,8 @@ def post_data():
     r.set(sha1, data)
     r.expire(sha1, current_app.config['WEBSTORAGE_KEY_EXPIRATION_TIME'])
 
-    # TODO: set location header? url_for('get_data', sha1=sha1, _external=True)
-    return sha1, 201
+    location = url_for('get_data', sha1=sha1, _external=True)
+    return sha1, 201, {'Location': location}
 
 
 @app.route('/<string:sha1>', methods=['GET'])
