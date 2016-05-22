@@ -7,11 +7,21 @@ The idea is to allow webapps to store some state without the need for
 complex backends.
 
 
+## See it in action
+
+Live API server: https://webstorage.herokuapp.com/
+
+(Note: accessing the link will return a 405 error as only POST is
+allowed on the app root. See documentation below).
+
+Demo app: https://rshk.github.io/webstorage
+
+
 ## Usage
 
 ### Save some data
 
-    POST /
+    POST https://webstorage.herokuapp.com/
 
 Data is sent as POST request content.
 
@@ -25,7 +35,7 @@ The response body contains the sha1 hash at which data was stored.
 
 ### Retrieve some data
 
-    GET /<data-sha1>
+    GET https://webstorage.herokuapp.com/<data-sha1>
 
 Javascript example:
 
