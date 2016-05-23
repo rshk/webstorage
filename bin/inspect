@@ -1,0 +1,9 @@
+#!/bin/bash
+
+python3 <<EOF
+import redis
+REDIS_URL="$( heroku config:get REDIS_URL )"
+r = redis.StrictRedis.from_url(REDIS_URL)
+for key in r.keys():
+    print(key, r.get(key)[:100])
+EOF
