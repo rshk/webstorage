@@ -2,16 +2,35 @@
 <html>
     <head>
         <title>WebStorage example</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     </head>
     <body>
-        <h1>WebStorage Example</h1>
-        <div id="msg-saved" style="color:#080;display:none"></div>
-        <div id="msg-error" style="color:#800;display:none"></div>
-        <form id="form">
-            <textarea id="text" style="width:960px;min-height:400px;"></textarea><br>
-            <button type="submit">Save</button>
-        </form>
+        <a href="https://github.com/rshk/webstorage"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+        <div class="container">
+            <h1>WebStorage Example</h1>
+            <div class="well">
+                <p>Hello! This is an example app making use of <a href="https://github.com/rshk/webstorage">webstorage</a>
+                to keep state. Just type in some text in the text
+                field below and hit save. The URL will be updated
+                automatically to hold a reference to the text you just
+                saved, so you can share it with friends and
+                colleagues.</p>
+                <p>If you want to know more about how the state is stored, have a look at <a href="https://github.com/rshk/webstorage/blob/master/README.md">the project README file</a>.</p>
+            </div>
+            <div id="messages"></div>
+            <div id="msg-saved" style="color:#080;display:none"></div>
+            <div id="msg-error" style="color:#800;display:none"></div>
+            <form id="form">
+                <textarea id="text" rows="20" class="form-control"></textarea><br>
+                <button type="submit" class="btn btn-primary btn-lg pull-right" id="save-button">
+                    <span class="fa fa-cloud"></span>
+                    Save to webstorage
+                </button>
+            </form>
+        </div>
         <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <script type="text/javascript" src="app.js"></script>
     </body>
 </html>
